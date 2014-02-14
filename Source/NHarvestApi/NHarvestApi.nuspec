@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Encapsulates a simple and extensible wrapper for the Harvest API get request. This first release comes with a default resource path factory that only has account/who_am_i. More will come soon.</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>api Harvest</tags>
+  </metadata>
+</package>
