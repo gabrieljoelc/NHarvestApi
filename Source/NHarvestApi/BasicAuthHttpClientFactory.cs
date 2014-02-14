@@ -13,6 +13,7 @@ namespace NHarvestApi
             httpClient.DefaultRequestHeaders.Add("Accept", settings.HttpAcceptValue);
             httpClient.DefaultRequestHeaders.Add("Authorization", "Basic " + settings.BasicAuthBase64Value);
             httpClient.DefaultRequestHeaders.Add("User-Agent", settings.RequestHeaderUserAgent);
+            httpClient.BaseAddress = settings.BaseUri;
             return httpClient;
         }
     }

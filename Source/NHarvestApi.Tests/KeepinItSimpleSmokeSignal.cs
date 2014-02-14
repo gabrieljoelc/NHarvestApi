@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Configuration;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NHarvestApi.Tests
@@ -26,17 +28,25 @@ namespace NHarvestApi.Tests
             }
 
             [TestMethod]
-            public void Who_am_i_can_return_result()
+            public async Task Who_am_i_can_return_result()
             {
                 var api = new HarvestApi<ApiBasicAuthSettings>(new BasicAuthHttpClientFactory());
 
-                var hash = api.Get<Hash>(_apiBasicAuthSettings, factory => factory.WhoAmI());
+                var hash = await api.Get<Hash>(_apiBasicAuthSettings, factory => factory.WhoAmI());
 
                 Assert.IsNotNull(hash);
             }
 
             private class Hash
             {
+                public User User { get; set; }
+            }
+
+            private class User
+            {
+                public int Id { get; set; }
+                public string FirstName { get; set; }
+                public string LastName { get; set; }
             }
         }
     }
