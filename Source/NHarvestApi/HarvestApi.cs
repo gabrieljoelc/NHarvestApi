@@ -17,11 +17,11 @@ namespace NHarvestApi
             _resourceConverter = resourceConverter ?? new JsonNetResourceConverter();
         }
 
-        public Task<T> Get<T>(TSettings settings, Expression<Func<IResourcePathFactory, string>> uriFactoryExpression)
+        public async Task<T> Get<T>(TSettings settings, Expression<Func<IResourcePathFactory, string>> uriFactoryExpression)
         {
             using (var httpClient = _httpClientFactory.CreateClient(settings))
             {
-                return _resourceConverter.Get<T>(httpClient, uriFactoryExpression.Compile()(_resourcePathFactory));
+                return await _resourceConverter.Get<T>(httpClient, uriFactoryExpression.Compile()(_resourcePathFactory));
             }
         }
     }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NHarvestApi.Tests")]
+[assembly: AssemblyTitle("NHarvestApi.ConsoleTestApp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NHarvestApi.Tests")]
+[assembly: AssemblyProduct("NHarvestApi.ConsoleTestApp")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("545d2e43-47c6-4e53-bfa1-7c820c9c27d9")]
+[assembly: Guid("7f35bfdb-2855-4a4f-880c-57a537485fdc")]
 
 // Version information for an assembly consists of the following four values:
 //

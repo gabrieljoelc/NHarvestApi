@@ -10,7 +10,6 @@ namespace NHarvestApi
         {
             var message = new HttpRequestMessage(HttpMethod.Get, resourceRelativePath);
             var response = await httpClient.SendAsync(message);
-            //var response = await httpClient.GetAsync(new Uri(httpClient.BaseAddress, resourceRelativePath));
             response.EnsureSuccessStatusCode();
             
             var responseAsString = await response.Content.ReadAsStringAsync();
