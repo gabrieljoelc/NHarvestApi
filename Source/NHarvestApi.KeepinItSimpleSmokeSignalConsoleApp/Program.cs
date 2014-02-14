@@ -22,7 +22,8 @@ namespace NHarvestApi.KeepinItSimpleSmokeSignalConsoleApp
             var username = args[1];
             var password = args[2];
 
-            var apiBasicAuthSettings = new ApiBasicAuthSettings(subdomain, username, password);
+            var apiBasicAuthSettings = new ApiBasicAuthSettings(subdomain);
+            apiBasicAuthSettings.SetCredentials(username, password);
             var api = new HarvestApi<ApiBasicAuthSettings>(new BasicAuthHttpClientFactory());
 
             await Can_get_result_from_who_am_i(api, apiBasicAuthSettings);
@@ -32,7 +33,7 @@ namespace NHarvestApi.KeepinItSimpleSmokeSignalConsoleApp
         {
             var hash = await api.Get<Hash>(apiBasicAuthSettings, factory => factory.WhoAmI());
 
-            if (hash == null)
+            if (hash == null || hash.User == null)
                 Debug.Fail("who_am_i returned null.");
         }
 
