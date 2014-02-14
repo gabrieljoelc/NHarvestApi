@@ -13,10 +13,10 @@ namespace NHarvestApi
             Guard.IsNotNullOrEmpty(requestHeaderUserAgent, "requestHeaderUserAgent");
 
             Subdomain = subdomain;
+            CredentialsValue = credentialsValue;
             MaxResponseContentBufferSize = maxResponseContentBufferSize;
             HttpAcceptValue = httpAcceptValue;
             RequestHeaderUserAgent = requestHeaderUserAgent;
-            CredentialsValue = credentialsValue;
             BaseUri = new Uri("https://" + subdomain + ".harvestapp.com");
         }
 
@@ -26,7 +26,7 @@ namespace NHarvestApi
         
         public string Subdomain { get; protected set; }
 
-        public string Username { get; protected set; }
+        public string Username { get; set; }
 
         public int MaxResponseContentBufferSize { get; protected set; }
 
@@ -41,6 +41,7 @@ namespace NHarvestApi
 
         public void SetCredentials(string username, string password)
         {
+            Username = username;
             // https://github.com/harvesthq/harvest_api_samples/blob/master/harvest_api_sample.cs
             CredentialsValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(username + ":" + password));
         }
