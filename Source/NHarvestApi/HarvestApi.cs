@@ -14,7 +14,7 @@ namespace NHarvestApi
         {
             _httpClientFactory = httpClientFactory;
             _resourcePathFactory = resourcePathFactory ?? new DefaultResourcePathFactory();
-            _resourceConverter = resourceConverter ?? new JsonNetResourceConverter();
+            _resourceConverter = resourceConverter ?? new JsonNetStronglyTypedResourceConverter();
         }
 
         public async Task<T> Get<T>(TSettings settings, Expression<Func<IResourcePathFactory, string>> uriFactoryExpression)
@@ -24,5 +24,7 @@ namespace NHarvestApi
                 return await _resourceConverter.Get<T>(httpClient, uriFactoryExpression.Compile()(_resourcePathFactory));
             }
         }
+
+        // TODO: use fluent API that assumes defaults unless you want to specify your own IHttpClientFactory, IResourceConverter, IResourcePathFactory, etc. 
     }
 }

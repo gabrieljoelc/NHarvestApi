@@ -57,6 +57,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ApiBasicAuthSettingsTests.cs" />
+    <Compile Include="UnderscoredPropertyNamesContractResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
