@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace NHarvestApi
@@ -10,18 +11,32 @@ namespace NHarvestApi
         private readonly IResourceConverter _resourceConverter;
         private readonly IResourcePathFactory _resourcePathFactory;
 
-        public HarvestApi(IHttpClientFactory<TSettings> httpClientFactory, IResourceConverter resourceConverter = null, IResourcePathFactory resourcePathFactory = null)
+        public HarvestApi(IHttpClientFactory<TSettings> httpClientFactory, IResourceConverter resourceConverter = null,
+            IResourcePathFactory resourcePathFactory = null)
         {
             _httpClientFactory = httpClientFactory;
-            _resourcePathFactory = resourcePathFactory ?? new DefaultResourcePathFactory();
+            _resourcePathFactory = resourcePathFactory ?? new DefaultHarvestResourcePathFactory();
             _resourceConverter = resourceConverter ?? new JsonNetStronglyTypedResourceConverter();
         }
 
-        public async Task<T> Get<T>(TSettings settings, Expression<Func<IResourcePathFactory, string>> uriFactoryExpression)
+        public async Task<T> Get<T>(TSettings settings,
+            Expression<Func<IResourcePathFactory, string>> uriFactoryExpression, HttpClientHandler handler = null)
         {
-            using (var httpClient = _httpClientFactory.CreateClient(settings))
+            var httpMethod = HttpMethod.Get;
+            return await SendAsync<T>(settings, uriFactoryExpression, httpMethod, handler);
+        }
+
+        private async Task<T> SendAsync<T>(TSettings settings,
+            Expression<Func<IResourcePathFactory, string>> uriFactoryExpression, HttpMethod httpMethod,
+            HttpClientHandler handler = null)
+        {
+            using (var httpClient = _httpClientFactory.CreateClient(settings, handler))
             {
-                return await _resourceConverter.Get<T>(httpClient, uriFactoryExpression.Compile()(_resourcePathFactory));
+                var message = new HttpRequestMessage(httpMethod, uriFactoryExpression.Compile()(_resourcePathFactory));
+                var response = await httpClient.SendAsync(message);
+                response.EnsureSuccessStatusCode();
+
+                return await _resourceConverter.Convert<T>(response);
             }
         }
 

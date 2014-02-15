@@ -4,6 +4,6 @@ namespace NHarvestApi
 {
     public interface IHttpClientFactory<in TSettings>
     {
-        HttpClient CreateClient(TSettings settings);
+        HttpClient CreateClient(TSettings settings, HttpClientHandler handler = null);
     }
 }

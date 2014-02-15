@@ -6,6 +6,6 @@ namespace NHarvestApi
 {
     public interface IResourceConverter
     {
-        Task<T> Get<T>(HttpClient httpClient, string resourceRelativePath);
+        Task<T> Convert<T>(HttpResponseMessage response);
     }
 }

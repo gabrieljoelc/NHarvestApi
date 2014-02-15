@@ -13,17 +13,13 @@ namespace NHarvestApi
             _jsonSerializerSettings = jsonSerializerSettings ??
                                       new JsonSerializerSettings
                                       {
+                                          // this would get factored out if we ever make the API wrapper portion generic
                                           ContractResolver = new UnderscoredPropertyNamesContractResolver()
                                       };
         }
 
-        public async Task<T> Get<T>(HttpClient httpClient, string resourceRelativePath)
+        public async Task<T> Convert<T>(HttpResponseMessage response)
         {
-            // TODO: probably factor this out into some other class
-            var message = new HttpRequestMessage(HttpMethod.Get, resourceRelativePath);
-            var response = await httpClient.SendAsync(message);
-            response.EnsureSuccessStatusCode();
-
             var responseAsString = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(responseAsString, _jsonSerializerSettings);
         }
