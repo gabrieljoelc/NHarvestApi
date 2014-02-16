@@ -14,10 +14,10 @@ namespace NHarvestApi.Harvest
 
         public string GetAllTimeEntriesLoggedByUserForGivenTimeframe(int userId, DateTime from, DateTime to, bool? billable)
         {
-            var uri = string.Format("/people/{0}/entries?from={1}&to={2}", userId, from.ToString(DateFormat), to.ToString(DateFormat));
+            var uri = string.Format("people/{0}/entries?from={1}&to={2}", userId, from.ToString(DateFormat), to.ToString(DateFormat));
             if (billable.HasValue)
             {
-                uri += "billable=" + (billable.Value ? "yes" : "no");
+                uri += "&billable=" + (billable.Value ? "yes" : "no");
             }
             return uri;
         }
