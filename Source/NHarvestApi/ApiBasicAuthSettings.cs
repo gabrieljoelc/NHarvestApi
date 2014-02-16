@@ -5,7 +5,7 @@ namespace NHarvestApi
 {
     public class ApiBasicAuthSettings
     {
-        // this would get factored out if we ever make the API wrapper portion generic (don't want the dependency on the hard-coded base uri segments
+        // this would get factored out and replaced with the one beneath it if we ever make the API wrapper portion generic (don't want the dependency on the hard-coded base uri segments
         public ApiBasicAuthSettings(string subdomain, string credentialsValue = null, int maxResponseContentBufferSize = 256000, string httpAcceptValue = "application/json",
             string requestHeaderUserAgent = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)")
         {
@@ -21,19 +21,19 @@ namespace NHarvestApi
             BaseUri = new Uri("https://" + subdomain + ".harvestapp.com");
         }
 
-        public ApiBasicAuthSettings(Uri baseUri, string credentialsValue = null, int maxResponseContentBufferSize = 256000, string httpAcceptValue = "application/json",
-            string requestHeaderUserAgent = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)")
-        {
-            Guard.IsNotNull(baseUri, "baseUri");
-            Guard.IsNotNullOrEmpty(httpAcceptValue, "httpAcceptValue");
-            Guard.IsNotNullOrEmpty(requestHeaderUserAgent, "requestHeaderUserAgent");
+        //public ApiBasicAuthSettings(Uri baseUri, string credentialsValue = null, int maxResponseContentBufferSize = 256000, string httpAcceptValue = "application/json",
+        //    string requestHeaderUserAgent = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)")
+        //{
+        //    Guard.IsNotNull(baseUri, "baseUri");
+        //    Guard.IsNotNullOrEmpty(httpAcceptValue, "httpAcceptValue");
+        //    Guard.IsNotNullOrEmpty(requestHeaderUserAgent, "requestHeaderUserAgent");
 
-            CredentialsValue = credentialsValue;
-            MaxResponseContentBufferSize = maxResponseContentBufferSize;
-            HttpAcceptValue = httpAcceptValue;
-            RequestHeaderUserAgent = requestHeaderUserAgent;
-            BaseUri = baseUri;
-        }
+        //    CredentialsValue = credentialsValue;
+        //    MaxResponseContentBufferSize = maxResponseContentBufferSize;
+        //    HttpAcceptValue = httpAcceptValue;
+        //    RequestHeaderUserAgent = requestHeaderUserAgent;
+        //    BaseUri = baseUri;
+        //}
 
         public string CredentialsValue { get; protected internal set; }
 
