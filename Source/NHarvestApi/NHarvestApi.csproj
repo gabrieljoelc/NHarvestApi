@@ -39,17 +39,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiBase.cs" />
     <Compile Include="ApiBasicAuthSettings.cs" />
     <Compile Include="BasicAuthHttpClientFactory.cs" />
-    <Compile Include="DefaultHarvestResourcePathFactory.cs" />
     <Compile Include="Guard.cs" />
-    <Compile Include="HarvestApi.cs" />
+    <Compile Include="Harvest\DefaultHarvestResourcePathFactory.cs" />
+    <Compile Include="Harvest\HarvestApi.cs" />
+    <Compile Include="Harvest\IHarvestResourcePathFactory.cs" />
     <Compile Include="IHttpClientFactory.cs" />
     <Compile Include="JsonNet\FlattenAnonymousObjectArrayElementsConverter.cs" />
     <Compile Include="JsonNet\UnderscoredPropertyNamesContractResolver.cs" />
     <Compile Include="StringUtils.cs" />
     <Compile Include="IResourceConverter.cs" />
-    <Compile Include="IHarvestResourcePathFactory.cs" />
     <Compile Include="JsonNetStronglyTypedResourceConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

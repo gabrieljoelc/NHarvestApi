@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using NHarvestApi.Harvest;
 using NHarvestApi.JsonNet;
 
 namespace NHarvestApi.KeepinItSimpleSmokeSignalConsoleApp
@@ -56,7 +57,7 @@ namespace NHarvestApi.KeepinItSimpleSmokeSignalConsoleApp
             var timeEntries = await BasicAuthApi.Get<DayEntries>(apiBasicAuthSettings,
                 factory =>
                     factory.GetAllTimeEntriesLoggedByUserForGivenTimeframe(userId, @from ?? DateTime.Parse("10-1-2013"),
-                        to ?? DateTime.Parse("12-31-2013")), HarvestResourceConverterDefaults.Create(new FlattenAnonymousObjectArrayElementsConverter<DayEntries, DayEntry>()));
+                        to ?? DateTime.Parse("12-31-2013"), true), HarvestResourceConverterDefaults.Create(new FlattenAnonymousObjectArrayElementsConverter<DayEntries, DayEntry>()));
 
             if (timeEntries == null)
             {

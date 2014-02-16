@@ -5,21 +5,21 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NHarvestApi.JsonNet;
 
-namespace NHarvestApi
+namespace NHarvestApi.Harvest
 {
-    public class HarvestApi<TSettings>
+    public class HarvestApi<TSettings> : ApiBase<TSettings>
     {
-        private readonly IHttpClientFactory<TSettings> _httpClientFactory;
         private readonly IHarvestResourcePathFactory _resourcePathFactory;
 
         public HarvestApi(IHttpClientFactory<TSettings> httpClientFactory, IHarvestResourcePathFactory resourcePathFactory = null)
+            : base(httpClientFactory)
         {
-            _httpClientFactory = httpClientFactory;
             _resourcePathFactory = resourcePathFactory ?? new DefaultHarvestResourcePathFactory();
         }
 
         public async Task<T> Get<T>(TSettings settings,
-            Expression<Func<IHarvestResourcePathFactory, string>> uriFactoryExpression, IResourceConverter resourceConverter = null, HttpClientHandler handler = null)
+            Expression<Func<IHarvestResourcePathFactory, string>> uriFactoryExpression,
+            IResourceConverter resourceConverter = null, HttpClientHandler handler = null)
         {
             var httpMethod = HttpMethod.Get;
             return await SendAsync<T>(settings, uriFactoryExpression, httpMethod, resourceConverter, handler);
@@ -29,15 +29,11 @@ namespace NHarvestApi
             Expression<Func<IHarvestResourcePathFactory, string>> uriFactoryExpression, HttpMethod httpMethod,
             IResourceConverter resourceConverter, HttpClientHandler handler = null)
         {
-            using (var httpClient = _httpClientFactory.CreateClient(settings, handler))
-            {
-                var message = new HttpRequestMessage(httpMethod, uriFactoryExpression.Compile()(_resourcePathFactory));
-                var response = await httpClient.SendAsync(message);
-                response.EnsureSuccessStatusCode();
-
-                return await (resourceConverter ?? HarvestResourceConverterDefaults.Create()).Convert<T>(response);
-            }
+            string requestUri = uriFactoryExpression.Compile()(_resourcePathFactory);
+            resourceConverter = resourceConverter ?? HarvestResourceConverterDefaults.Create();
+            return await SendAsync<T>(settings, httpMethod, handler, requestUri, resourceConverter);
         }
+
         // TODO: use fluent API that assumes defaults unless you want to specify your own IHttpClientFactory, IResourceConverter, IHarvestResourcePathFactory, etc. 
     }
 
