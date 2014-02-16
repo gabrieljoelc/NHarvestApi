@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Serialization;
 
-namespace NHarvestApi
+namespace NHarvestApi.JsonNet
 {
     public class UnderscoredPropertyNamesContractResolver : DefaultContractResolver
     {

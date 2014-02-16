@@ -57,7 +57,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ApiBasicAuthSettingsTests.cs" />
-    <Compile Include="UnderscoredPropertyNamesContractResolverTests.cs" />
+    <Compile Include="JsonNet\FlattenAnonymousObjectArrayElementsConverter.cs" />
+    <Compile Include="JsonNet\UnderscoredPropertyNamesContractResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

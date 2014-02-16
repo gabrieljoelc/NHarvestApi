@@ -1,7 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using NHarvestApi.JsonNet;
 
-namespace NHarvestApi.Tests
+namespace NHarvestApi.Tests.JsonNet
 {
     [TestClass]
     public class UnderscoredPropertyNamesContractResolverTests
@@ -49,7 +50,6 @@ namespace NHarvestApi.Tests
 
         private class Zap
         {
-            //[JsonProperty(PropertyName = "foo_bar")]
             public int FooBar { get; set; }
         }
     }

@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using NHarvestApi.JsonNet;
 
 namespace NHarvestApi
 {

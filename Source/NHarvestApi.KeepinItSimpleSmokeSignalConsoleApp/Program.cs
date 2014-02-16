@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using NHarvestApi.JsonNet;
 
 namespace NHarvestApi.KeepinItSimpleSmokeSignalConsoleApp
 {
@@ -16,6 +14,8 @@ namespace NHarvestApi.KeepinItSimpleSmokeSignalConsoleApp
         static void Main(string[] args)
         {
             When_basic_auth_defaults(args).Wait();
+
+            Console.WriteLine("Press any key to close...");
             Console.ReadLine();
         }
 
@@ -56,7 +56,7 @@ namespace NHarvestApi.KeepinItSimpleSmokeSignalConsoleApp
             var timeEntries = await BasicAuthApi.Get<DayEntries>(apiBasicAuthSettings,
                 factory =>
                     factory.GetAllTimeEntriesLoggedByUserForGivenTimeframe(userId, @from ?? DateTime.Parse("10-1-2013"),
-                        to ?? DateTime.Parse("12-31-2013")), HarvestResourceConverterDefaults.Create(new DayEntriesConverter()));
+                        to ?? DateTime.Parse("12-31-2013")), HarvestResourceConverterDefaults.Create(new FlattenAnonymousObjectArrayElementsConverter<DayEntries, DayEntry>()));
 
             if (timeEntries == null)
             {
@@ -66,8 +66,7 @@ namespace NHarvestApi.KeepinItSimpleSmokeSignalConsoleApp
 
             Console.WriteLine(timeEntries);
         }
-
-
+        
         class Hash
         {
             public User User { get; set; }
@@ -98,7 +97,7 @@ namespace NHarvestApi.KeepinItSimpleSmokeSignalConsoleApp
 
             public override string ToString()
             {
-                return this.Aggregate("", (s, entry) => s + "; " + entry.ToString());
+                return this.Aggregate("", (s, entry) => s + "; " + entry.ToString() + "\n") + "Total hours: " + TotalHours;
             }
         }
 
@@ -167,59 +166,6 @@ namespace NHarvestApi.KeepinItSimpleSmokeSignalConsoleApp
                     return base.GetHashCode();
 
                 return GetType().GetHashCode() ^ Id.GetHashCode();
-            }
-        }
-
-        class DayEntriesConverter : JsonConverter
-        {
-            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-                JsonSerializer serializer)
-            {
-                var entries = (objectType == typeof(DayEntries))
-                        ? new DayEntries()
-                        : (DayEntries)Activator.CreateInstance(objectType);
-                
-                if (reader.TokenType == JsonToken.StartArray)
-                    reader.Read();
-                
-                var contractResolver = serializer.ContractResolver as DefaultContractResolver;
-                if (contractResolver == null)
-                {
-                    throw new InvalidOperationException("The IContractResolver must be of type DefaultContractResolver.");
-                }
-                
-                var resolvedPropertyName = contractResolver.GetResolvedPropertyName(typeof(DayEntry).Name);
-                
-                while (reader.TokenType != JsonToken.EndArray)
-                {
-                    var entry = new DayEntry();
-                    reader.Read(); // advance past StartObject
-                    if (reader.TokenType != JsonToken.PropertyName || (string) reader.Value != resolvedPropertyName)
-                    {
-                        throw new InvalidDataException("Expected JSON token doesn't exist.");
-                    }
-                    reader.Read(); // advance past day_entry
-                    //reader.Read(); // advance past StartObject
-
-                    serializer.Populate(reader, entry);
-
-                    entries.Add(entry);
-
-                    reader.Read();
-                    reader.Read();
-                }
-
-                return entries;
-            }
-
-            public override bool CanConvert(Type objectType)
-            {
-                return typeof(DayEntries).IsAssignableFrom(objectType);
             }
         }
     }
