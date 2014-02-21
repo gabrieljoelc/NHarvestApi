@@ -63,6 +63,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\APeAye\APeAye.csproj">
+      <Project>{3b8114ef-145d-41e1-a03c-0d391ee05085}</Project>
+      <Name>APeAye</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NHarvestApi\NHarvestApi.csproj">
       <Project>{6A116EC1-0908-42D2-A339-71038B75824C}</Project>
       <Name>NHarvestApi</Name>

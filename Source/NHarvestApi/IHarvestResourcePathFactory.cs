@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NHarvestApi.Harvest
+namespace NHarvestApi
 {
     public interface IHarvestResourcePathFactory
     {

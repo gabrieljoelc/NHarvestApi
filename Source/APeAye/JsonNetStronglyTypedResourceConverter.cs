@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace NHarvestApi
+namespace APeAye
 {
     public class JsonNetStronglyTypedResourceConverter : IResourceConverter
     {

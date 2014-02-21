@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace NHarvestApi
+namespace APeAye
 {
     public class BasicAuthHttpClientFactory : IHttpClientFactory<ApiBasicAuthSettings>
     {

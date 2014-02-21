@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NHarvestApi.Harvest
+namespace NHarvestApi
 {
     // this would get factored out if we ever make the API wrapper portion generic
     class DefaultHarvestResourcePathFactory : IHarvestResourcePathFactory

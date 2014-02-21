@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace NHarvestApi
+namespace APeAye
 {
     [DebuggerNonUserCode]
-    static class Guard
+    public static class Guard
     {
         public static void IsNotNull(object obj, string parameter)
         {

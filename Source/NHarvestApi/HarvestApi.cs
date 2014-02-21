@@ -2,10 +2,9 @@
 using System.Linq.Expressions;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using NHarvestApi.JsonNet;
+using APeAye;
 
-namespace NHarvestApi.Harvest
+namespace NHarvestApi
 {
     public class HarvestApi<TSettings> : ApiBase<TSettings>
     {
@@ -34,26 +33,6 @@ namespace NHarvestApi.Harvest
             return await SendAsync<T>(settings, httpMethod, handler, requestUri, resourceConverter);
         }
 
-        // TODO: use fluent API that assumes defaults unless you want to specify your own IHttpClientFactory, IResourceConverter, IHarvestResourcePathFactory, etc. 
-    }
-
-    public static class HarvestResourceConverterDefaults
-    {
-        public static IResourceConverter Create(params JsonConverter[] jsonConverters)
-        {
-            var settings = new JsonSerializerSettings
-            {
-                // this would get factored out if we ever make the API wrapper portion generic
-                ContractResolver = new UnderscoredPropertyNamesContractResolver(),
-            };
-            if (jsonConverters != null)
-            {
-                foreach (var jsonConverter in jsonConverters)
-                {
-                    settings.Converters.Add(jsonConverter);
-                }
-            }
-            return new JsonNetStronglyTypedResourceConverter(settings);
-        }
+        // TODO: maybe use fluent API that assumes defaults unless you want to specify your own IHttpClientFactory, IResourceConverter, IHarvestResourcePathFactory, etc. instead of instantiating a class with ctor dependencies
     }
 }

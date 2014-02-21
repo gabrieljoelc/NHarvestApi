@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace NHarvestApi
+namespace APeAye
 {
     public abstract class ApiBase<TSettings>
     {

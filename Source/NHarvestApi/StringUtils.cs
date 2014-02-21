@@ -2,7 +2,7 @@
 
 namespace NHarvestApi
 {
-    internal static class StringUtils
+    static class StringUtils
     {   
         // https://github.com/srkirkland/Inflector/blob/master/Inflector/Inflector.cs
         public static string Underscore(this string pascalCasedWord)

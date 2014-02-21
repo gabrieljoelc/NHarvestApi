@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using NHarvestApi.Harvest;
+using APeAye;
 using NHarvestApi.JsonNet;
 
 namespace NHarvestApi.KeepinItSimpleSmokeSignalConsoleApp
@@ -29,7 +29,7 @@ namespace NHarvestApi.KeepinItSimpleSmokeSignalConsoleApp
             var username = args[1];
             var password = args[2];
 
-            var apiBasicAuthSettings = new ApiBasicAuthSettings(subdomain);
+            var apiBasicAuthSettings = new HarvestApiBasicAuthSettings(subdomain);
             apiBasicAuthSettings.SetCredentials(username, password);
 
             var hash = await Can_get_result_from_WhoAmI(apiBasicAuthSettings);
